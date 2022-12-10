@@ -918,7 +918,7 @@ V8_EXPORT void LogicTick(v8::Isolate *Isolate)
 //-------------------------- end debug --------------------------
 
 
-V8_EXPORT void GetHeapStatistics(v8::Isolate *Isolate, char* buf, bufLen)
+V8_EXPORT void GetHeapStatistics(v8::Isolate *Isolate, char* buf, int bufLen)
 {
     v8::HeapStatistics heap;
     Isolate->GetHeapStatistics(&heap);

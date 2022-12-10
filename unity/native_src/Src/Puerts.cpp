@@ -917,6 +917,41 @@ V8_EXPORT void LogicTick(v8::Isolate *Isolate)
 
 //-------------------------- end debug --------------------------
 
+
+V8_EXPORT void GetHeapStatistics(v8::Isolate *Isolate, char* buf, bufLen)
+{
+    v8::HeapStatistics heap;
+    Isolate->GetHeapStatistics(&heap);
+
+    snprintf(buf, bufLen, "{\"total_heap_size\":%d,\
+\"total_heap_size_executable\":%d,\
+\"total_physical_size\":%d,\
+\"total_available_size\":%d,\
+\"total_global_handles_size\":%d,\
+\"used_global_handles_size\":%d,\
+\"used_heap_size\":%d,\
+\"heap_size_limit\":%d,\
+\"malloced_memory\":%d,\
+\"external_memory\":%d,\
+\"peak_malloced_memory\":%d,\
+\"number_of_native_contexts\":%d,\
+\"number_of_detached_contexts\":%d}",  
+        heap.total_heap_size(),
+        heap.total_heap_size_executable(),
+        heap.total_physical_size(),
+        heap.total_available_size(),
+        heap.total_global_handles_size(),
+        heap.used_global_handles_size(),
+        heap.used_heap_size(),
+        heap.heap_size_limit(),
+        heap.malloced_memory(),
+        heap.external_memory(),
+        heap.peak_malloced_memory(),
+        heap.number_of_native_contexts(),
+        heap.number_of_detached_contexts());
+}
+
+
 #ifdef __cplusplus
 }
 #endif

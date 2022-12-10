@@ -148,7 +148,7 @@ namespace puerts
 #endif        
 
 #if !WITH_NODEJS
-    void JSEngine::JSEngineWithoutNode(void* external_quickjs_runtime, void* external_quickjs_context)
+    void JSEngine::JSEngineWithoutNode(void* external_quickjs_runtime, void* external_quickjs_context, bool jitless)
     {
         if (!GPlatform)
         {
@@ -163,6 +163,11 @@ namespace puerts
 #endif
 #if PLATFORM_IOS
         Flags += "--jitless --no-expose-wasm";
+#else
+        if(jitless)
+        {
+            Flags += " --jitless ";
+        }
 #endif
         v8::V8::SetFlagsFromString(Flags.c_str(), static_cast<int>(Flags.size()));
 
@@ -207,14 +212,14 @@ namespace puerts
     }
 #endif
 
-    JSEngine::JSEngine(void* external_quickjs_runtime, void* external_quickjs_context)
+    JSEngine::JSEngine(void* external_quickjs_runtime, void* external_quickjs_context, bool jitless)
     {
         GeneralDestructor = nullptr;
         Inspector = nullptr;
 #if WITH_NODEJS
         JSEngineWithNode();
 #else
-        JSEngineWithoutNode(external_quickjs_runtime, external_quickjs_context);
+        JSEngineWithoutNode(external_quickjs_runtime, external_quickjs_context, jitless);
 #endif
     }
 

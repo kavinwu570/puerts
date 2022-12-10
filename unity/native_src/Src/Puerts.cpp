@@ -43,9 +43,9 @@ V8_EXPORT int GetLibBackend()
 #endif
 }
 
-V8_EXPORT v8::Isolate *CreateJSEngine()
+V8_EXPORT v8::Isolate *CreateJSEngine(bool jitless)
 {
-    auto JsEngine = new JSEngine(nullptr, nullptr);
+    auto JsEngine = new JSEngine(nullptr, nullptr, jitless);
     return JsEngine->MainIsolate;
 }
 
@@ -920,13 +920,14 @@ V8_EXPORT void LogicTick(v8::Isolate *Isolate)
 
 V8_EXPORT void GetHeapStatistics(v8::Isolate *Isolate, char* buf, int bufLen)
 {
+#ifndef WITH_QUICKJS
     v8::HeapStatistics heap;
 
     v8::Isolate::Scope IsolateScope(Isolate);
     v8::HandleScope HandleScope(Isolate);
     v8::Local<v8::Context> Context = Isolate->GetCurrentContext();
     v8::Context::Scope ContextScope(Context);
-    
+
     Isolate->GetHeapStatistics(&heap);
 
     snprintf(buf, bufLen, "{\"total_heap_size\":%d,\
@@ -955,6 +956,7 @@ V8_EXPORT void GetHeapStatistics(v8::Isolate *Isolate, char* buf, int bufLen)
         heap.peak_malloced_memory(),
         heap.number_of_native_contexts(),
         heap.number_of_detached_contexts());
+#endif    // !WITH_QUICKJS
 }
 
 

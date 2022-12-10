@@ -918,7 +918,7 @@ V8_EXPORT void LogicTick(v8::Isolate *Isolate)
 //-------------------------- end debug --------------------------
 
 
-V8_EXPORT void GetHeapStatistics(v8::Isolate *Isolate, char* buf, int bufLen)
+V8_EXPORT void GetHeapStatisticsToBuf(v8::Isolate *Isolate, char* buf, int bufLen)
 {
 #ifndef WITH_QUICKJS
     v8::HeapStatistics heap;
@@ -930,19 +930,19 @@ V8_EXPORT void GetHeapStatistics(v8::Isolate *Isolate, char* buf, int bufLen)
 
     Isolate->GetHeapStatistics(&heap);
 
-    snprintf(buf, bufLen, "{\"total_heap_size\":%d,\
-\"total_heap_size_executable\":%d,\
-\"total_physical_size\":%d,\
-\"total_available_size\":%d,\
-\"total_global_handles_size\":%d,\
-\"used_global_handles_size\":%d,\
-\"used_heap_size\":%d,\
-\"heap_size_limit\":%d,\
-\"malloced_memory\":%d,\
-\"external_memory\":%d,\
-\"peak_malloced_memory\":%d,\
-\"number_of_native_contexts\":%d,\
-\"number_of_detached_contexts\":%d}",  
+    snprintf(buf, bufLen, "{\"total_heap_size\":%zd,\
+\"total_heap_size_executable\":%zd,\
+\"total_physical_size\":%zd,\
+\"total_available_size\":%zd,\
+\"total_global_handles_size\":%zd,\
+\"used_global_handles_size\":%zd,\
+\"used_heap_size\":%zd,\
+\"heap_size_limit\":%zd,\
+\"malloced_memory\":%zd,\
+\"external_memory\":%zd,\
+\"peak_malloced_memory\":%zd,\
+\"number_of_native_contexts\":%zd,\
+\"number_of_detached_contexts\":%zd}",  
         heap.total_heap_size(),
         heap.total_heap_size_executable(),
         heap.total_physical_size(),

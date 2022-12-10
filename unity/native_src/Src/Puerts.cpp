@@ -49,10 +49,10 @@ V8_EXPORT v8::Isolate *CreateJSEngine(bool jitless)
     return JsEngine->MainIsolate;
 }
 
-V8_EXPORT v8::Isolate *CreateJSEngineWithExternalEnv(void* external_quickjs_runtime, void* external_quickjs_context)
+V8_EXPORT v8::Isolate *CreateJSEngineWithExternalEnv(void* external_quickjs_runtime, void* external_quickjs_context, bool jitless)
 {
 #if WITH_QUICKJS
-    auto JsEngine = new JSEngine(external_quickjs_runtime, external_quickjs_context);
+    auto JsEngine = new JSEngine(external_quickjs_runtime, external_quickjs_context, jitless);
     return JsEngine->MainIsolate;
 #else
     return nullptr;

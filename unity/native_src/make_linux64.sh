@@ -15,4 +15,5 @@ cmake -DJS_ENGINE=$ENGINE -DCMAKE_BUILD_TYPE=$CONFIG ../
 cd ..
 cmake --build build_linux64_$ENGINE --config $CONFIG
 mkdir -p ../Assets/Plugins/x86_64/
-cp build_linux64_$ENGINE/libpuerts.so ../Assets/Plugins/x86_64/libpuerts.so
+#cp build_linux64_$ENGINE/libpuerts.so ../Assets/Plugins/x86_64/libpuerts.so
+cp build_linux64_$ENGINE/libpuerts.a ../Assets/Plugins/x86_64/libpuerts.a

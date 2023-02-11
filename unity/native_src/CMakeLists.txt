@@ -100,9 +100,16 @@ if ( APPLE )
         )
     endif ()
 else ()
-    add_library(puerts SHARED
-        ${PUERTS_SRC} ${PUERTS_INC}
-    )
+    if ( UNIX )
+        add_library(puerts STATIC
+            ${PUERTS_SRC} ${PUERTS_INC}
+        )
+    else()
+        add_library(puerts SHARED
+            ${PUERTS_SRC} ${PUERTS_INC}
+        )
+    endif()
+    
 endif ()
 
 if ( WIN32 AND NOT CYGWIN )

@@ -77,6 +77,17 @@ V8_EXPORT void SetModuleResolver(v8::Isolate *Isolate, CSharpModuleResolveCallba
     JsEngine->ModuleResolver = Resolver;
     JsEngine->Idx = Idx;
 }
+V8_EXPORT void SetModuleResolverBufferSize(v8::Isolate *Isolate, int32_t bufferSize)
+{
+    auto JsEngine = FV8Utils::IsolateData<JSEngine>(Isolate);
+    JsEngine->SetModuleResolverBufferSize(bufferSize);
+}
+V8_EXPORT void SetModuleResolverByBuffer(v8::Isolate *Isolate, CSharpModuleResolveByBufferCallback Resolver, int32_t Idx)
+{
+    auto JsEngine = FV8Utils::IsolateData<JSEngine>(Isolate);
+    JsEngine->ModuleResolverByBuffer = Resolver;
+    JsEngine->Idx = Idx;
+}
 V8_EXPORT void SetPushJSFunctionArgumentsCallback(v8::Isolate *Isolate, CSharpPushJSFunctionArgumentsCallback Callback, int32_t Idx)
 {
     auto JsEngine = FV8Utils::IsolateData<JSEngine>(Isolate);

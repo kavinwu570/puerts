@@ -170,7 +170,17 @@ namespace puerts {
             return Iter->second;
         }
 
-        const char* Code = JsEngine->ModuleResolver(name_std.c_str(), JsEngine->Idx);
+        const char* Code = nullptr;
+        if( JsEngine->ModuleResolverByBuffer && JSEngine->JsCodeBuffer )
+        {
+            JSEngine->ModuleResolverByBuffer(name_std.c_str(),  JSEngine->JsCodeBuffer, JSEngine->ModuleResolverBufferSize, JsEngine->Idx);
+            Code = (const char*)JSEngine->JsCodeBuffer;
+        }
+        else
+        {
+            Code = JsEngine->ModuleResolver(name_std.c_str(), JsEngine->Idx);
+        }
+         
         if (Code == nullptr) 
         {
             std::string ErrorMessage = std::string("module not found ") + name_std;

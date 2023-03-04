@@ -737,3 +737,4 @@ namespace puerts
         }
         JsCodeBuffer = new char[ModuleResolverBufferSize];
     }
+}

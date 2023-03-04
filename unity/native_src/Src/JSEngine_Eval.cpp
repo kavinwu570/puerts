@@ -100,8 +100,24 @@ namespace puerts {
         const char* Code = nullptr;
         if( JsEngine->ModuleResolverByBuffer )
         {
-            JsEngine->ModuleResolverByBuffer(Specifier_std.c_str(), JsEngine->JsCodeBuffer, JsEngine->ModuleResolverBufferSize, JsEngine->Idx);
-            Code = (const char*)JsEngine->JsCodeBuffer;
+            int num = JsEngine->ModuleResolverByBuffer(Specifier_std.c_str(), JsEngine->JsCodeBuffer, JsEngine->ModuleResolverBufferSize, JsEngine->Idx);
+            if (num >= 0)
+            {
+                JsEngine->JsCodeBuffer[num] = 0;
+            }
+            else
+            {
+                JsEngine->SetModuleResolverBufferSize(-num);
+                num = JsEngine->ModuleResolverByBuffer(Specifier_std.c_str(), JsEngine->JsCodeBuffer, JsEngine->ModuleResolverBufferSize, JsEngine->Idx);
+                if (num >= 0)
+                {
+                    JsEngine->JsCodeBuffer[num] = 0;
+                }
+            }
+            if(num >= 0)
+            {
+                Code = (const char*)JsEngine->JsCodeBuffer;
+            }                        
         }
         else
         {
@@ -182,9 +198,25 @@ namespace puerts {
 
         const char* Code = nullptr;
         if( JsEngine->ModuleResolverByBuffer )
-        {
-            JsEngine->ModuleResolverByBuffer(name_std.c_str(), JsEngine->JsCodeBuffer, JsEngine->ModuleResolverBufferSize, JsEngine->Idx);
-            Code = (const char*)JsEngine->JsCodeBuffer;
+        {            
+            int num = JsEngine->ModuleResolverByBuffer(name_std.c_str(), JsEngine->JsCodeBuffer, JsEngine->ModuleResolverBufferSize, JsEngine->Idx);
+            if (num >= 0)
+            {
+                JsEngine->JsCodeBuffer[num] = 0;
+            }
+            else
+            {
+                JsEngine->SetModuleResolverBufferSize(-num);
+                num = JsEngine->ModuleResolverByBuffer(name_std.c_str(), JsEngine->JsCodeBuffer, JsEngine->ModuleResolverBufferSize, JsEngine->Idx);
+                if (num >= 0)
+                {
+                    JsEngine->JsCodeBuffer[num] = 0;
+                }
+            }
+            if(num >= 0)
+            {
+                Code = (const char*)JsEngine->JsCodeBuffer;
+            }           
         }
         else
         {

@@ -735,6 +735,6 @@ namespace puerts
             delete JsCodeBuffer;
             JsCodeBuffer = nullptr;
         }
-        JsCodeBuffer = new char[ModuleResolverBufferSize];
+        JsCodeBuffer = new char[ModuleResolverBufferSize+1];
     }
 }

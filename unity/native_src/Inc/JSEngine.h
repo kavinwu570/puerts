@@ -55,7 +55,7 @@
 
 typedef char* (*CSharpModuleResolveCallback)(const char* identifer, int32_t jsEnvIdx);
 
-typedef void (*CSharpModuleResolveByBufferCallback)(const char* identifer, const char* buffer, int bufferSize, int32_t jsEnvIdx);
+typedef int32_t (*CSharpModuleResolveByBufferCallback)(const char* identifer, const char* buffer, int bufferSize, int32_t jsEnvIdx);
 
 typedef void (*CSharpPushJSFunctionArgumentsCallback)(v8::Isolate* Isolate, int32_t jsEnvIdx, puerts::JSFunction* NativeFuncPtr);
 
@@ -178,7 +178,7 @@ public:
     CSharpModuleResolveByBufferCallback ModuleResolverByBuffer;
     char* JsCodeBuffer;
     int ModuleResolverBufferSize;
-    
+
     CSharpPushJSFunctionArgumentsCallback GetJSArgumentsCallback;
     
 #if defined(WITH_QUICKJS)

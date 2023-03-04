@@ -96,7 +96,17 @@ namespace puerts {
             return v8::Local<v8::Module>::New(Isolate, cacheIter->second);
         }
         v8::Local<v8::Module> Module;
-        const char* Code = JsEngine->ModuleResolver(Specifier_std.c_str(), JsEngine->Idx);
+        
+        const char* Code = nullptr;
+        if( JsEngine->ModuleResolverByBuffer )
+        {
+            JsEngine->ModuleResolverByBuffer(name_std.c_str(), JsEngine->JsCodeBuffer, JsEngine->ModuleResolverBufferSize, JsEngine->Idx);
+            Code = (const char*)JsEngine->JsCodeBuffer;
+        }
+        else
+        {
+            Code = JsEngine->ModuleResolver(name_std.c_str(), JsEngine->Idx);
+        }
         if (Code == nullptr) 
         {
             std::string ErrorMessage = std::string("module not found ") + Specifier_std;
@@ -171,7 +181,7 @@ namespace puerts {
         }
 
         const char* Code = nullptr;
-        if( JsEngine->ModuleResolverByBuffer && JsEngine->JsCodeBuffer )
+        if( JsEngine->ModuleResolverByBuffer )
         {
             JsEngine->ModuleResolverByBuffer(name_std.c_str(), JsEngine->JsCodeBuffer, JsEngine->ModuleResolverBufferSize, JsEngine->Idx);
             Code = (const char*)JsEngine->JsCodeBuffer;

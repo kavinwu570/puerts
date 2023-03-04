@@ -171,10 +171,10 @@ namespace puerts {
         }
 
         const char* Code = nullptr;
-        if( JsEngine->ModuleResolverByBuffer && JSEngine->JsCodeBuffer )
+        if( JsEngine->ModuleResolverByBuffer && JsEngine->JsCodeBuffer )
         {
-            JSEngine->ModuleResolverByBuffer(name_std.c_str(),  JSEngine->JsCodeBuffer, JSEngine->ModuleResolverBufferSize, JsEngine->Idx);
-            Code = (const char*)JSEngine->JsCodeBuffer;
+            JsEngine->ModuleResolverByBuffer(name_std.c_str(), JsEngine->JsCodeBuffer, JsEngine->ModuleResolverBufferSize, JsEngine->Idx);
+            Code = (const char*)JsEngine->JsCodeBuffer;
         }
         else
         {

@@ -216,6 +216,9 @@ namespace puerts
     {
         GeneralDestructor = nullptr;
         Inspector = nullptr;
+        ModuleResolverByBuffer = nullptr;
+        JsCodeBuffer = nullptr;
+        ModuleResolverBufferSize = 0; 
 #if WITH_NODEJS
         JSEngineWithNode();
 #else
@@ -229,6 +232,11 @@ namespace puerts
         {
             delete Inspector;
             Inspector = nullptr;
+        }
+        if( JsCodeBuffer != nullptr)
+        {
+            delete JsCodeBuffer;
+            JsCodeBuffer = nullptr;
         }
 
         JSObjectIdMap.Reset();
@@ -713,5 +721,20 @@ namespace puerts
             return Inspector->Tick();
         }
         return true;
+    }
+    
+    void JSEngine::SetModuleResolverBufferSize(int bufferSize)
+    {
+        if( ModuleResolverBufferSize >= bufferSize)
+        {
+            return;
+        }
+        ModuleResolverBufferSize = bufferSize;
+        if(JsCodeBuffer != nullptr)
+        {
+            delete JsCodeBuffer;
+            JsCodeBuffer = nullptr;
+        }
+        JsCodeBuffer = new char[ModuleResolverBufferSize+1];
     }
 }

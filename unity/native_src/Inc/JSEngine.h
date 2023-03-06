@@ -55,6 +55,8 @@
 
 typedef char* (*CSharpModuleResolveCallback)(const char* identifer, int32_t jsEnvIdx);
 
+typedef int32_t (*CSharpModuleResolveByBufferCallback)(const char* identifer, const char* buffer, int bufferSize, int32_t jsEnvIdx);
+
 typedef void (*CSharpPushJSFunctionArgumentsCallback)(v8::Isolate* Isolate, int32_t jsEnvIdx, puerts::JSFunction* NativeFuncPtr);
 
 typedef void(*CSharpFunctionCallback)(v8::Isolate* Isolate, const v8::FunctionCallbackInfo<v8::Value>& Info, void* Self, int ParamLen, int64_t UserData);
@@ -155,6 +157,8 @@ public:
 
     void LogicTick();
 
+    void SetModuleResolverBufferSize(int bufferSize);
+
     v8::Isolate* MainIsolate;
 
     std::vector<char> StrBuffer;
@@ -171,6 +175,10 @@ public:
     int32_t Idx;
     
     CSharpModuleResolveCallback ModuleResolver;
+    CSharpModuleResolveByBufferCallback ModuleResolverByBuffer;
+    char* JsCodeBuffer;
+    int ModuleResolverBufferSize;
+
     CSharpPushJSFunctionArgumentsCallback GetJSArgumentsCallback;
     
 #if defined(WITH_QUICKJS)

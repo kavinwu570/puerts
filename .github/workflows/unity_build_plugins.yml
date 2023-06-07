@@ -77,9 +77,7 @@ jobs:
         uses: ./.github/workflows/composites/unity-download-backend/
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          backend: 'v8'
-      - name: Use Xcode 12.0 for x86
-        run: sudo xcode-select -switch "/Applications/Xcode_12.app"
+          backend: 'v8'      
       - name: Build
         run: |
           cd unity/native_src
@@ -98,9 +96,7 @@ jobs:
         uses: ./.github/workflows/composites/unity-download-backend/
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          backend: 'quickjs'
-      - name: Use Xcode 12.0 for x86
-        run: sudo xcode-select -switch "/Applications/Xcode_12.app"
+          backend: 'quickjs'      
       - name: Build
         run: |
           cd unity/native_src
@@ -119,9 +115,7 @@ jobs:
         uses: ./.github/workflows/composites/unity-download-backend/
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          backend: 'v8'
-      - name: Use Xcode 12.0 for x86
-        run: sudo xcode-select -switch "/Applications/Xcode_12.app"
+          backend: 'v8'      
       - name: Build
         run: |
           cd unity/native_src
@@ -140,9 +134,7 @@ jobs:
         uses: ./.github/workflows/composites/unity-download-backend/
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          backend: 'nodejs'
-      - name: Use Xcode 12.0 for x86
-        run: sudo xcode-select -switch "/Applications/Xcode_12.app"
+          backend: 'nodejs'      
       - name: Build
         run: |
           cd unity/native_src
@@ -161,9 +153,7 @@ jobs:
         uses: ./.github/workflows/composites/unity-download-backend/
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          backend: 'quickjs'
-      - name: Use Xcode 12.0 for x86
-        run: sudo xcode-select -switch "/Applications/Xcode_12.app"
+          backend: 'quickjs'      
       - name: Build
         run: |
           cd unity/native_src

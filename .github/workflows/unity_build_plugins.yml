@@ -69,7 +69,7 @@ jobs:
           path: ./unity/Assets/Plugins/**/*
           name: Unity_Plugins_QuickJS
   ios:
-    runs-on: macos-10.15
+    runs-on: macos-11
 
     steps:
       - uses: actions/checkout@v2
@@ -90,7 +90,7 @@ jobs:
           path: ./unity/Assets/Plugins/**/*
           name: Unity_Plugins_V8
   ios_qjs:
-    runs-on: macos-10.15
+    runs-on: macos-11
 
     steps:
       - uses: actions/checkout@v2
@@ -111,7 +111,7 @@ jobs:
           path: ./unity/Assets/Plugins/**/*
           name: Unity_Plugins_QuickJS
   osx:
-    runs-on: macos-10.15
+    runs-on: macos-11
 
     steps:
       - uses: actions/checkout@v2
@@ -132,7 +132,7 @@ jobs:
           path: ./unity/Assets/Plugins/**/*
           name: Unity_Plugins_V8
   osx_node:
-    runs-on: macos-10.15
+    runs-on: macos-11
 
     steps:
       - uses: actions/checkout@v2
@@ -153,7 +153,7 @@ jobs:
           path: ./unity/Assets/Plugins/**/*
           name: Unity_Plugins_NodeJS
   osx_qjs:
-    runs-on: macos-10.15
+    runs-on: macos-11
 
     steps:
       - uses: actions/checkout@v2

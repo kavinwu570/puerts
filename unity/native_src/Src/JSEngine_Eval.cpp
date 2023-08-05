@@ -95,7 +95,33 @@ namespace puerts {
         }
         v8::Local<v8::Module> Module;
         char* pathForDebug;
-        const char* Code = JsEngine->ModuleResolver(Specifier_std.c_str(), JsEngine->Idx, pathForDebug);
+        const char* Code = nullptr;
+        if( JsEngine->ModuleResolverByBuffer )
+        {
+            int num = JsEngine->ModuleResolverByBuffer(Specifier_std.c_str(), JsEngine->JsCodeBuffer, JsEngine->ModuleResolverBufferSize, JsEngine->Idx, pathForDebug);
+            if (num >= 0)
+            {
+                JsEngine->JsCodeBuffer[num] = 0;
+            }
+            else
+            {
+                JsEngine->SetModuleResolverBufferSize(-num);
+                num = JsEngine->ModuleResolverByBuffer(Specifier_std.c_str(), JsEngine->JsCodeBuffer, JsEngine->ModuleResolverBufferSize, JsEngine->Idx, pathForDebug);
+                if (num >= 0)
+                {
+                    JsEngine->JsCodeBuffer[num] = 0;
+                }
+            }
+            if(num >= 0)
+            {
+                Code = (const char*)JsEngine->JsCodeBuffer;
+            }                        
+        }
+        else
+        {
+            Code = JsEngine->ModuleResolver(Specifier_std.c_str(), JsEngine->Idx, pathForDebug);
+        }
+        
         if (Code == nullptr) 
         {
             const std::string ErrorMessage = std::string("module not found ") + Specifier_std;
@@ -199,7 +225,32 @@ namespace puerts {
         }
 
         char* pathForDebug;
-        const char* Code = JsEngine->ModuleResolver(name_std.c_str(), JsEngine->Idx, pathForDebug);
+        const char* Code = nullptr;
+        if( JsEngine->ModuleResolverByBuffer )
+        {
+            int num = JsEngine->ModuleResolverByBuffer(name_std.c_str(), JsEngine->JsCodeBuffer, JsEngine->ModuleResolverBufferSize, JsEngine->Idx, pathForDebug);
+            if (num >= 0)
+            {
+                JsEngine->JsCodeBuffer[num] = 0;
+            }
+            else
+            {
+                JsEngine->SetModuleResolverBufferSize(-num);
+                num = JsEngine->ModuleResolverByBuffer(name_std.c_str(), JsEngine->JsCodeBuffer, JsEngine->ModuleResolverBufferSize, JsEngine->Idx, pathForDebug);
+                if (num >= 0)
+                {
+                    JsEngine->JsCodeBuffer[num] = 0;
+                }
+            }
+            if(num >= 0)
+            {
+                Code = (const char*)JsEngine->JsCodeBuffer;
+            }                        
+        }
+        else
+        {
+            Code = JsEngine->ModuleResolver(name_std.c_str(), JsEngine->Idx, pathForDebug);
+        }
         if (Code == nullptr) 
         {
             std::string ErrorMessage = std::string("module not found ") + name_std;

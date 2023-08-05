@@ -58,6 +58,7 @@
 #endif
 
 typedef char* (*CSharpModuleResolveCallback)(const char* identifer, int32_t jsEnvIdx, char*& pathForDebug);
+typedef int32_t (*CSharpModuleResolveByBufferCallback)(const char* identifer, const char* buffer, int bufferSize, int32_t jsEnvIdx, char*& pathForDebug);
 
 typedef void(*CSharpFunctionCallback)(v8::Isolate* Isolate, const v8::FunctionCallbackInfo<v8::Value>& Info, void* Self, int ParamLen, int64_t UserData);
 
@@ -106,12 +107,12 @@ class JSEngine
 {
 private: 
     void JSEngineWithNode();
-    void JSEngineWithoutNode(void* external_quickjs_runtime, void* external_quickjs_context);
+    void JSEngineWithoutNode(void* external_quickjs_runtime, void* external_quickjs_context, bool jitless);
 #if !WITH_QUICKJS
     static void HostInitializeImportMetaObject(v8::Local<v8::Context> context, v8::Local<v8::Module> module, v8::Local<v8::Object> meta);
 #endif
 public:
-    JSEngine(void* external_quickjs_runtime, void* external_quickjs_context);
+    JSEngine(void* external_quickjs_runtime, void* external_quickjs_context, bool jitless);
 
     ~JSEngine();
 
@@ -165,6 +166,7 @@ public:
     bool InspectorTick();
 
     void LogicTick();
+    void SetModuleResolverBufferSize(int bufferSize);
 
     v8::Isolate* MainIsolate;
 
@@ -182,6 +184,9 @@ public:
     int32_t Idx;
     
     CSharpModuleResolveCallback ModuleResolver;
+    CSharpModuleResolveByBufferCallback ModuleResolverByBuffer;
+    char* JsCodeBuffer;
+    int ModuleResolverBufferSize;
 #if defined(WITH_QUICKJS)
     std::map<std::string, JSModuleDef*> PathToModuleMap;
 #else

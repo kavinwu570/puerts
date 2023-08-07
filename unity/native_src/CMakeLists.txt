@@ -105,14 +105,20 @@ if ( APPLE )
         )
     endif ()
 else ()
-    if ( UNIX )
-        add_library(puerts STATIC
-            ${PUERTS_SRC} ${PUERTS_INC}
-        )
-    else()
+    if (ANDROID )
         add_library(puerts SHARED
             ${PUERTS_SRC} ${PUERTS_INC}
         )
+    else()
+        if ( UNIX )
+            add_library(puerts STATIC
+                ${PUERTS_SRC} ${PUERTS_INC}
+            )
+        else()
+            add_library(puerts SHARED
+                ${PUERTS_SRC} ${PUERTS_INC}
+            )
+        endif ()
     endif ()
 endif ()
 

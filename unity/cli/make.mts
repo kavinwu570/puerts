@@ -141,7 +141,7 @@ const platformCompileConfig = {
                 cd("..")
                 assert.equal(0, exec(`cmake --build ${CMAKE_BUILD_PATH} --config ${options.config}`).code)
 
-                return `${CMAKE_BUILD_PATH}/lib${cmakeAddedLibraryName}.so`;
+                return `${CMAKE_BUILD_PATH}/lib${cmakeAddedLibraryName}.a`;
             }
         }
     }

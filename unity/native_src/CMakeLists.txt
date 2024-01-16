@@ -116,10 +116,22 @@ if ( APPLE )
             PRIVATE "-Wl,-rpath,@loader_path/"
         )
     endif ()
-else ()
-    add_library(puerts SHARED
-        ${PUERTS_SRC} ${PUERTS_INC}
-    )
+else ()    
+    if (ANDROID )
+        add_library(puerts SHARED
+            ${PUERTS_SRC} ${PUERTS_INC}
+        )
+    else()
+        if ( UNIX )
+            add_library(puerts STATIC
+                ${PUERTS_SRC} ${PUERTS_INC}
+            )
+        else()
+            add_library(puerts SHARED
+                ${PUERTS_SRC} ${PUERTS_INC}
+            )
+        endif ()
+    endif ()
 endif ()
 
 # target_compile_definitions (puerts PRIVATE THREAD_SAFE)
@@ -204,9 +216,9 @@ elseif (UNIX)
     
     # definition
     target_compile_definitions (puerts PRIVATE PLATFORM_LINUX)
-    set(CMAKE_CXX_COMPILER "clang++")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -stdlib=libc++ -lc++abi")
+    set(CMAKE_CXX_COMPILER "clang++")    
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -stdlib=libc++ ")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static -stdlib=libc++ -lc++abi")
 endif ()
 
 # link
